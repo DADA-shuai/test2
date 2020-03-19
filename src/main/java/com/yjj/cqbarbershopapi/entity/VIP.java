@@ -1,6 +1,7 @@
 package com.yjj.cqbarbershopapi.entity;
 
 
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
@@ -16,13 +17,23 @@ import java.util.Date;
 public class VIP {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @ApiModelProperty(value = "用户id")
     private Integer id;
+    @ApiModelProperty(value = "用户名")
     private String name;
+    @ApiModelProperty(value = "用户电话")
     private String tel;
+    @ApiModelProperty(value = "用户余额")
     private BigDecimal balance;
+    @ApiModelProperty(value = "用户卡号")
     private String card_no;
+    @ApiModelProperty(value = "用户密码")
     private String pass;
+    @ApiModelProperty(value = "用户创建时间")
     private Date create_date;
+    @ApiModelProperty(value = "用户充值次数")
+    private int count;
+
 
 //    public int getId() {
 //        return id;

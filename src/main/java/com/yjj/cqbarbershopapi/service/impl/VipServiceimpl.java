@@ -28,21 +28,26 @@ public class VipServiceimpl implements VipService {
 
     @Override
     public boolean save(VIP vip) {
-        if (vip.getName()!=null){
-            ExampleMatcher matcher = ExampleMatcher.matching().
-                    withIgnorePaths("id").withIgnorePaths("pass").
-                    withIgnorePaths("tel").withIgnorePaths("create_date").
-                    withIgnorePaths("balance").withIgnorePaths("card_no");
-            Example<VIP> example = Example.of(vip, matcher);
-            Optional<VIP> vip1 = vipRepository.findOne(example);
-            if (vip1.isPresent()){
-                return false;
-            }else{
-                vipRepository.save(vip);
-                return true;
-            }
+        if (findByName(vip)){
+            vipRepository.save(vip);
+            return true;
         }
         return false;
+//        if (vip.getName()!=null){
+//            ExampleMatcher matcher = ExampleMatcher.matching().
+//                    withIgnorePaths("id").withIgnorePaths("pass").
+//                    withIgnorePaths("tel").withIgnorePaths("create_date").
+//                    withIgnorePaths("balance").withIgnorePaths("card_no");
+//            Example<VIP> example = Example.of(vip, matcher);
+//            Optional<VIP> vip1 = vipRepository.findOne(example);
+//            if (vip1.isPresent()){
+//                return false;
+//            }else{
+//                vipRepository.save(vip);
+//                return true;
+//            }
+//        }
+//        return false;
     }
 
     @Override
@@ -78,10 +83,30 @@ public class VipServiceimpl implements VipService {
             if (vip1==null){
                 return false;
             }
+            if (findByName(vip)){
+                vip1.setName(vip.getName());
+            }
             vip1.setTel(vip.getTel());
             vip1.setPass(vip.getPass());
             vipRepository.save(vip1);
             return true;
+        }
+        return false;
+    }
+
+    public boolean findByName(VIP vip){
+        if (vip.getName()!=null){
+            ExampleMatcher matcher = ExampleMatcher.matching().
+                    withIgnorePaths("id").withIgnorePaths("pass").
+                    withIgnorePaths("tel").withIgnorePaths("create_date").
+                    withIgnorePaths("balance").withIgnorePaths("card_no");
+            Example<VIP> example = Example.of(vip, matcher);
+            Optional<VIP> vip1 = vipRepository.findOne(example);
+            if (vip1.isPresent()){
+                return false;
+            }else{
+                return true;
+            }
         }
         return false;
     }

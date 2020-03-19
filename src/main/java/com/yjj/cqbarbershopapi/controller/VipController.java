@@ -3,6 +3,8 @@ package com.yjj.cqbarbershopapi.controller;
 import com.yjj.cqbarbershopapi.entity.VIP;
 import com.yjj.cqbarbershopapi.response.BaseResult;
 import com.yjj.cqbarbershopapi.service.VipService;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
@@ -19,7 +21,8 @@ public class VipController {
     VipService vipService;
 
     @GetMapping("/vip/list")
-    public List<VIP> list(String page,String size, String name){
+    @ApiOperation(value = "用户列表查询")
+    public Page<VIP> list(@ApiParam("当前页")String page,@ApiParam("每页显示的条数")String size,@ApiParam("用户名查询条件") String name){
         //只对name进行查询
         if (page==null){
             page="0";
@@ -29,15 +32,11 @@ public class VipController {
         }
         List<VIP> list = new ArrayList<>();
         Page<VIP> vips = vipService.findAll(Integer.parseInt(page), Integer.parseInt(size),name);
-        for (int i = 0; i < vips.getContent().size(); i++) {
-            list.add(vips.getContent().get(i));
-            System.out.println(vips.getContent().get(i));
-            System.out.println(vips.getTotalElements());
-        }
-        return list;
+        return vips;
     }
 
     @PostMapping("/vip")
+    @ApiOperation(value = "新增用户")
     public BaseResult save(VIP vip){
         vip.setBalance(new BigDecimal("0"));
         vip.setCard_no("vip000006");
@@ -51,13 +50,15 @@ public class VipController {
     }
 
     @GetMapping("/vip/{id}")
-    public VIP findById(@PathVariable("id") Integer id){
+    @ApiOperation(value = "根据id查找用户")
+    public VIP findById(@ApiParam("用户id") @PathVariable("id") Integer id){
         System.out.println("test:"+id);
         return vipService.findById(id);
     }
 
     @DeleteMapping("/vip/{ids}")
-    public BaseResult delete(@PathVariable("ids") String ids){
+    @ApiOperation(value = "删除用户")
+    public BaseResult delete(@ApiParam("用户id列表") @PathVariable("ids") String ids){
         String[] Ids = ids.split(",");
         // 将字符串数组转为List<Intger> 类型
         List<Integer> LString = new ArrayList<Integer>();
@@ -69,6 +70,7 @@ public class VipController {
     }
 
     @PutMapping("/vip")
+    @ApiOperation(value = "更新用户资料")
     public BaseResult update(@RequestBody VIP vip){
         System.out.println(vip);
         boolean update = vipService.update(vip);
