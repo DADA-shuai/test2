@@ -10,7 +10,7 @@ import java.math.BigDecimal;
 @Data
 @Entity
 @Table(name = "t_order")
-public class ORDER {
+public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @ApiModelProperty("订单id")

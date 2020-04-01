@@ -1,11 +1,12 @@
 package com.yjj.cqbarbershopapi.controller;
 
-import com.yjj.cqbarbershopapi.entity.VIP;
+import com.yjj.cqbarbershopapi.entity.Vip;
 import com.yjj.cqbarbershopapi.response.BaseResult;
 import com.yjj.cqbarbershopapi.service.VipService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,7 +23,7 @@ public class VipController {
 
     @GetMapping("/vip/list")
     @ApiOperation(value = "用户列表查询")
-    public Page<VIP> list(@ApiParam("当前页")String page,@ApiParam("每页显示的条数")String size,@ApiParam("用户名查询条件") String name){
+    public Page<Vip> list(@ApiParam("当前页")String page, @ApiParam("每页显示的条数")String size, @ApiParam("用户名查询条件") String name){
         //只对name进行查询
         if (page==null){
             page="0";
@@ -30,14 +31,14 @@ public class VipController {
         if (size==null){
             size="5";
         }
-        List<VIP> list = new ArrayList<>();
-        Page<VIP> vips = vipService.findAll(Integer.parseInt(page), Integer.parseInt(size),name);
+        List<Vip> list = new ArrayList<>();
+        Page<Vip> vips = vipService.findAll(Integer.parseInt(page), Integer.parseInt(size),name);
         return vips;
     }
 
     @PostMapping("/vip")
     @ApiOperation(value = "新增用户")
-    public BaseResult save(VIP vip){
+    public BaseResult save(Vip vip){
         vip.setBalance(new BigDecimal("0"));
         vip.setCard_no("vip000006");
         vip.setCreate_date(new Date());
@@ -51,7 +52,7 @@ public class VipController {
 
     @GetMapping("/vip/{id}")
     @ApiOperation(value = "根据id查找用户")
-    public VIP findById(@ApiParam("用户id") @PathVariable("id") Integer id){
+    public Vip findById(@ApiParam("用户id") @PathVariable("id") Integer id){
         System.out.println("test:"+id);
         return vipService.findById(id);
     }
@@ -71,10 +72,10 @@ public class VipController {
 
     @PutMapping("/vip")
     @ApiOperation(value = "更新用户资料")
-    public BaseResult update(@RequestBody VIP vip){
+    public BaseResult update(@RequestBody Vip vip){
         System.out.println(vip);
-        boolean update = vipService.update(vip);
-        if (update){
+        Vip update = vipService.update(vip);
+        if (update!=null){
             return new BaseResult(true,"chenggong");
         }
         return new BaseResult(false,"id输入有误");

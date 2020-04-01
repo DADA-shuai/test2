@@ -1,7 +1,7 @@
 package com.yjj.cqbarbershopapi.controller;
 
 
-import com.yjj.cqbarbershopapi.entity.VIP;
+import com.yjj.cqbarbershopapi.entity.Vip;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
-import javax.servlet.http.HttpServlet;
 import java.util.List;
 
 @RestController
@@ -18,14 +17,14 @@ public class RestTemplateController {
     RestTemplate restTemplate;
 
     @GetMapping("/getForObject")
-    public List<VIP> getForObject(){
+    public List<Vip> getForObject(){
         String url = "http://localhost:8081/vip/list";
         List forObject = restTemplate.getForObject(url, List.class);
         return forObject;
     }
 
     @GetMapping("/getForEntity")
-    public List<VIP> getForEntity(){
+    public List<Vip> getForEntity(){
         String url = "http://localhost:8081/vip/list";
         ResponseEntity<List> forEntity = restTemplate.getForEntity(url, List.class);
         int statusCodeValue = forEntity.getStatusCodeValue();//获得状态码

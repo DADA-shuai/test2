@@ -1,7 +1,7 @@
 package com.yjj.cqbarbershopapi.service.impl;
 
 import com.yjj.cqbarbershopapi.dao.VipRepository;
-import com.yjj.cqbarbershopapi.entity.VIP;
+import com.yjj.cqbarbershopapi.entity.Vip;
 import com.yjj.cqbarbershopapi.response.BaseResult;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.Assert;
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -29,7 +28,7 @@ class VipServiceimplTest {
     @Test
     @Transactional
     void save() {
-        VIP vip = new VIP();
+        Vip vip = new Vip();
         vip.setBalance(new BigDecimal("0"));
         vip.setCard_no("vip000004");
         vip.setCreate_date(new Date());
@@ -53,7 +52,7 @@ class VipServiceimplTest {
 
     @Test
     void findById() {
-        VIP vip = vipRepository.findById(1).get();
+        Vip vip = vipRepository.findById(1).get();
         assertNotNull(vip);
         assertEquals(vip.getId(),1);
         assertEquals(vip.getPass(),"110");

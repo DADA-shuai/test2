@@ -1,7 +1,7 @@
 package com.yjj.cqbarbershopapi.service;
 
-import com.yjj.cqbarbershopapi.entity.VIP;
+import com.yjj.cqbarbershopapi.entity.Vip;
 
-public interface VipService extends CommonService<VIP>{
+public interface VipService extends CommonService<Vip>{
 
 }

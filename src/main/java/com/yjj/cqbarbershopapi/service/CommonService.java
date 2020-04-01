@@ -1,10 +1,8 @@
 package com.yjj.cqbarbershopapi.service;
 
-import com.yjj.cqbarbershopapi.entity.VIP;
+import com.yjj.cqbarbershopapi.entity.Vip;
 import org.springframework.data.domain.Page;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.print.DocFlavor;
 import java.util.List;
 
 public interface CommonService<T> {
@@ -14,8 +12,8 @@ public interface CommonService<T> {
 
     public T findById(Integer id);
 
-    public Page<VIP> findAll(int page, int size,String username);
+    public Page<Vip> findAll(int page, int size, String username);
 
-    public boolean update(T t);
+    public Vip update(T t);
 
 }
